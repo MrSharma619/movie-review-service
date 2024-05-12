@@ -1,6 +1,6 @@
 # movie-review-service  
 
-This is API project for Movie review system.  
+This is API project for Movie review system made in Spring boot using Java.  
 
 User can browse through a list of movies.  
 add their review.  
