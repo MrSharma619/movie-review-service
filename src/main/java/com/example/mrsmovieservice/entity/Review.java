@@ -23,4 +23,6 @@ public class Review {
 
     private String body;
 
+    private UUID userId;
+
 }

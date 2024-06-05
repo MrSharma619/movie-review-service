@@ -21,13 +21,14 @@ public class ReviewService {
 
 
     @Transactional
-    public Review addReview(int rating, String body, String imdbId) throws Exception {
+    public Review addReview(int rating, String body, String imdbId, UUID userId) throws Exception {
         UUID reviewId = UUID.randomUUID();
 
         Review review = new Review(
                 reviewId,
                 rating,
-                body
+                body,
+                userId
         );
 
         repository.save(review);
