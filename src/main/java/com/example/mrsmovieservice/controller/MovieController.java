@@ -1,5 +1,6 @@
 package com.example.mrsmovieservice.controller;
 
+import com.example.mrsmovieservice.dto.ReviewDto;
 import com.example.mrsmovieservice.entity.Movie;
 import com.example.mrsmovieservice.entity.Review;
 import com.example.mrsmovieservice.service.MovieService;
@@ -53,8 +54,8 @@ public class MovieController {
     }
 
     @GetMapping("/imdb/{imdbId}/reviews")
-    public ResponseEntity<List<Review>> getReviewsForMovie(@PathVariable String imdbId) throws Exception {
-        List<Review> reviews = service.getReviewsForMovie(imdbId);
+    public ResponseEntity<List<ReviewDto>> getReviewsForMovie(@PathVariable String imdbId) throws Exception {
+        List<ReviewDto> reviews = service.getReviewsForMovie(imdbId);
 
         return new ResponseEntity<>(reviews, HttpStatus.OK);
 

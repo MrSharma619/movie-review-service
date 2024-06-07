@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -31,7 +32,8 @@ public class AuthenticationService {
                 input.getFullName(),
                 input.getUserName(),
                 input.getEmail(),
-                passwordEncoder.encode(input.getPassword())
+                passwordEncoder.encode(input.getPassword()),
+                new Date()
         );
 
         return userRepository.save(user);

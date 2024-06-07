@@ -30,7 +30,8 @@ public class UserController {
                 user.getId(),
                 user.getFullName(),
                 user.getEmail(),
-                user.getPlatformUserName()
+                user.getPlatformUserName(),
+                user.getJoinedOn()
         );
 
         return new ResponseEntity<>(userResponse, HttpStatus.OK);

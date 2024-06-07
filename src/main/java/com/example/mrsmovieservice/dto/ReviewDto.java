@@ -1,6 +1,5 @@
-package com.example.mrsmovieservice.entity;
+package com.example.mrsmovieservice.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,10 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "reviews")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Review {
-
-    @Id
+public class ReviewDto {
     private UUID id;
 
     private int rating;
@@ -24,10 +19,7 @@ public class Review {
 
     private Date createdOn;
 
-    private UUID userId;
+    private String userName;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
-    private User user;
-
+    private Date userJoinedOn;
 }

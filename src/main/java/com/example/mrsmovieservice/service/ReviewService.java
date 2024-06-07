@@ -30,7 +30,8 @@ public class ReviewService {
                 rating,
                 body,
                 new Date(),
-                userId
+                userId,
+                null
         );
 
         repository.save(review);

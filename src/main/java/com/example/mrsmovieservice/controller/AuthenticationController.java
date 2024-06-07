@@ -31,7 +31,8 @@ public class AuthenticationController {
                 registeredUser.getId(),
                 registeredUser.getFullName(),
                 registeredUser.getEmail(),
-                registeredUser.getPlatformUserName()
+                registeredUser.getPlatformUserName(),
+                registeredUser.getJoinedOn()
         );
 
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
