@@ -1,5 +1,6 @@
 package com.example.mrsmovieservice.controller;
 
+import com.example.mrsmovieservice.dto.ReviewDto;
 import com.example.mrsmovieservice.entity.Review;
 import com.example.mrsmovieservice.entity.User;
 import com.example.mrsmovieservice.service.ReviewService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,7 +25,7 @@ public class ReviewController {
     private UserService userManager;
 
     @PostMapping
-    public ResponseEntity<Review> addReview(
+    public ResponseEntity<ReviewDto> addReview(
             @RequestBody Map<String, String> payload,           //instead of creating dto we can use map as well
             @RequestHeader("Authorization") String header)
             throws Exception {
@@ -32,14 +34,30 @@ public class ReviewController {
 
         User user = userManager.getUserProfile(token);
 
-        Review review = service.addReview(
+        ReviewDto reviewDto = service.addReview(
                 Integer.parseInt(payload.get("rating")),
                 payload.get("reviewBody"),
                 payload.get("imdbId"),
                 user.getId()
         );
 
-        return new ResponseEntity<>(review, HttpStatus.CREATED);
+        return new ResponseEntity<>(reviewDto, HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/{imdbId}")
+    public ResponseEntity<List<ReviewDto>> getReviewsForMovie(@PathVariable String imdbId) throws Exception {
+        List<ReviewDto> reviews = service.getReviewsForMovie(imdbId);
+
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+
+        //did not do below because infinite renders in FE
+
+//        if (!reviews.isEmpty()){
+//            return new ResponseEntity<>(reviews, HttpStatus.OK);
+//        }
+//
+//        return new ResponseEntity<>(reviews, HttpStatus.NOT_FOUND);
 
     }
 

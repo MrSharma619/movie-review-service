@@ -53,20 +53,4 @@ public class MovieController {
 
     }
 
-    @GetMapping("/imdb/{imdbId}/reviews")
-    public ResponseEntity<List<ReviewDto>> getReviewsForMovie(@PathVariable String imdbId) throws Exception {
-        List<ReviewDto> reviews = service.getReviewsForMovie(imdbId);
-
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
-
-        //did not do below because infinite renders in FE
-
-//        if (!reviews.isEmpty()){
-//            return new ResponseEntity<>(reviews, HttpStatus.OK);
-//        }
-//
-//        return new ResponseEntity<>(reviews, HttpStatus.NOT_FOUND);
-
-    }
-
 }

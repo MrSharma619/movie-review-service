@@ -23,11 +23,6 @@ public class MovieService {
     @Autowired
     private MovieRepository repository;
 
-    @Autowired
-    private ReviewRepository reviewRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     public List<Movie> getAllMovies(){
         return repository.findAll();
@@ -39,38 +34,6 @@ public class MovieService {
 
     public Optional<Movie> getMovieByImdbId(String imdbId){
         return repository.findByImdbId(imdbId);
-    }
-
-    public List<ReviewDto> getReviewsForMovie(String imdbId) throws Exception {
-        Movie movie = getMovieByImdbId(imdbId).orElseThrow(() -> new Exception("Movie not found"));
-
-        List<UUID> reviewIds = movie.getReviewIds();
-
-        if(reviewIds != null){
-            List<Review> reviews = reviewRepository.findAllById(reviewIds);
-
-            return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
-
-        }
-
-        return new ArrayList<>();
-    }
-
-    private ReviewDto convertToDTO(Review review) {
-
-        ReviewDto dto = new ReviewDto();
-
-        dto.setId(review.getId());
-        dto.setRating(review.getRating());
-        dto.setBody(review.getBody());
-        dto.setCreatedOn(review.getCreatedOn());
-
-        User user = userRepository.findById(review.getUserId()).orElseThrow();
-
-        dto.setUserName(user.getPlatformUserName());
-        dto.setUserJoinedOn(user.getJoinedOn());
-
-        return dto;
     }
 
     @Transactional
