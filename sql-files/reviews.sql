@@ -101,4 +101,4 @@ insert into reviews (id, rating, body) values ('a4281c4b-4216-47e6-893c-67d45261
 
 update reviews set created_on = '2024-06-07 12:34:56.789012';
 
-update reviews set user_id = 'c3037b62-30b8-47a2-8103-9cc2cc94076c';
+update reviews set user_id = '88ff68f9-6b04-4cd0-8f2c-2e94a04b19ec';          -- change this id accordingly from users table
