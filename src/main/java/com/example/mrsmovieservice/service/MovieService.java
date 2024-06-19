@@ -36,6 +36,10 @@ public class MovieService {
         return repository.findByImdbId(imdbId);
     }
 
+    public Optional<List<Movie>> getMoviesByImdbIds(List<String> imdbIds){
+        return repository.findByImdbIdIn(imdbIds);
+    }
+
     @Transactional
     public void addReviewToMovie(String imdbId, UUID reviewId) throws Exception {
         Movie movie = getMovieByImdbId(imdbId).orElseThrow(() -> new Exception("Movie not found"));

@@ -1,5 +1,6 @@
 package com.example.mrsmovieservice.service;
 
+import com.example.mrsmovieservice.entity.Movie;
 import com.example.mrsmovieservice.entity.Watchlist;
 import com.example.mrsmovieservice.repository.WatchlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class WatchlistService {
 
     @Autowired
     private WatchlistRepository repository;
+
+    @Autowired
+    private MovieService movieService;
 
     public Watchlist addToWatchlist(String imdbId, UUID userId){
 
@@ -44,6 +48,33 @@ public class WatchlistService {
         watchlist.setImdbIds(imdbIds);
 
         return repository.save(watchlist);
+
+    }
+
+    public List<Movie> getUsersWatchlist(UUID userId){
+        Watchlist watchlist = repository.findByUserId(userId);
+
+        List<String> imdbIds = watchlist.getImdbIds();
+
+        return movieService.getMoviesByImdbIds(imdbIds).orElseThrow();
+
+    }
+
+    public String removeFromWatchlist(String imdbId, UUID userId){
+        Watchlist watchlist = repository.findByUserId(userId);
+
+        List<String> imdbIds = watchlist.getImdbIds();
+
+        if(imdbIds.contains(imdbId))
+            imdbIds.remove(imdbId);
+        else
+            return "Failed";
+
+        watchlist.setImdbIds(imdbIds);
+
+        repository.save(watchlist);
+
+        return "Success";
 
     }
 

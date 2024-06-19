@@ -1,5 +1,6 @@
 package com.example.mrsmovieservice.controller;
 
+import com.example.mrsmovieservice.entity.Movie;
 import com.example.mrsmovieservice.entity.User;
 import com.example.mrsmovieservice.entity.Watchlist;
 import com.example.mrsmovieservice.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,6 +43,41 @@ public class WatchlistController {
         }
 
         return new ResponseEntity<>(watchlist, HttpStatus.CREATED);
+
+    }
+
+    @GetMapping
+    private ResponseEntity<List<Movie>> getUsersWatchlist(@RequestHeader("Authorization") String header){
+
+        String token = header.substring(7);
+
+        User user = userManager.getUserProfile(token);
+
+        List<Movie> movieList = watchlistService.getUsersWatchlist(user.getId());
+
+        return new ResponseEntity<>(movieList, HttpStatus.OK);
+
+    }
+
+    @DeleteMapping
+    private ResponseEntity<String> removeFromWatchlist(
+            @RequestParam String imdbId,
+            @RequestHeader("Authorization") String header){
+
+        String token = header.substring(7);
+
+        User user = userManager.getUserProfile(token);
+
+        if(user != null){
+            String response = watchlistService.removeFromWatchlist(
+                    imdbId,
+                    user.getId()
+            );
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("User not found", HttpStatus.FORBIDDEN);
 
     }
 
